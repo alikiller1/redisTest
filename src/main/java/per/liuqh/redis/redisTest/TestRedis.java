@@ -17,9 +17,9 @@ public class TestRedis {
     @Before
     public void setup() {
         //连接redis服务器
-        jedis = new Jedis("192.168.1.100", 6379);
+        jedis = new Jedis("192.168.203.130", 6379);
         //权限认证,redis服务器如果设置了密码，则需要
-        //jedis.auth("123");  
+        jedis.auth("123");  
     }
     /**
      * redis存储字符串
@@ -47,6 +47,7 @@ public class TestRedis {
      */
     @Test
     public void testMap() {
+    	jedis.del("user");
         //-----添加数据----------  
         Map<String, String> map = new HashMap<String, String>();
         map.put("name", "xinxin");
@@ -91,8 +92,11 @@ public class TestRedis {
         
         jedis.del("java framework");
         jedis.rpush("java framework","spring");  
+        jedis.rpush("java framework","spring");  
         jedis.rpush("java framework","struts");  
         jedis.rpush("java framework","hibernate"); 
+       System.out.println(  jedis.lpop("java framework"));//取出链表的第一个
+       System.out.println(  jedis.rpop("java framework"));//取出链表的最后一个
         System.out.println(jedis.lrange("java framework",0,-1));
     }  
     
@@ -102,9 +106,11 @@ public class TestRedis {
     @Test  
     public void testSet(){  
         //添加  
+    	jedis.del("user");
         jedis.sadd("user","liuling");  
         jedis.sadd("user","xinxin");  
         jedis.sadd("user","ling");  
+        jedis.sadd("user","zhangxinxin");
         jedis.sadd("user","zhangxinxin");
         jedis.sadd("user","who");  
         //移除noname  

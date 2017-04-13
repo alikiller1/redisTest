@@ -7,7 +7,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public final class RedisUtil {
 
 	// Redis服务器IP
-	private static String ADDR = "192.168.1.100";
+	private static String ADDR = "192.168.203.130";
 
 	// Redis的端口号
 	private static int PORT = 6379;
@@ -44,7 +44,7 @@ public final class RedisUtil {
 			config.setTestOnBorrow(TEST_ON_BORROW);
 			//权限认证,redis服务器如果设置了密码，则需要
 			jedisPool = new JedisPool(config, ADDR, PORT, TIMEOUT, AUTH);
-			jedisPool = new JedisPool(config, ADDR, PORT, TIMEOUT);
+			//jedisPool = new JedisPool(config, ADDR, PORT, TIMEOUT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,5 +67,8 @@ public final class RedisUtil {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	public static void main(String[] args) {
+		RedisUtil.getJedis();
 	}
 }
